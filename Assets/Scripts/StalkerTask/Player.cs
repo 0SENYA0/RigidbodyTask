@@ -11,6 +11,7 @@ namespace StalkerTask
 		[SerializeField] private float _speed;
 
 		public float StepOffset => _characterController.stepOffset;
+		
 		private void Update()
 		{
 			float horizontalValue = Input.GetAxis(Horizontal);
