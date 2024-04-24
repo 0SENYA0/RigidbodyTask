@@ -168,7 +168,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _size: 35
-  _spawnDelay: 2
+  _spawnDelay: 0.1
+  _startColor: {r: 0, g: 0, b: 0, a: 0}
   _baseCube: {fileID: 3696573227857849135, guid: 29fd4dbfa71c8394ebc0c4e95ac0d5f7, type: 3}
 --- !u!1 &1297405854
 GameObject:

@@ -36,9 +36,16 @@ public class CubeSpawner : MonoBehaviour
 		while (true)
 		{
 			BaseCube cube = _baseCubePool.Get();
-			cube.Initialize(_baseCubePool, GetRandomPosition(), _startColor);
+			cube.Died += OnCubeDied;
+			cube.Initialize(GetRandomPosition(), _startColor);
 			yield return _waitForSeconds;
 		}
+	}
+
+	private void OnCubeDied(BaseCube cube)
+	{
+		cube.Died -= OnCubeDied;
+		_baseCubePool.Release(cube);
 	}
 
 	private Vector3 GetRandomPosition()

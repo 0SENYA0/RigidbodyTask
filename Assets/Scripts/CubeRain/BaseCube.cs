@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using UnityEngine;
 using UnityEngine.Pool;
@@ -12,8 +13,9 @@ namespace CubeRain
 		private ColorService _colorService;
 
 		private int _collisionCount;
-		private ObjectPool<BaseCube> _baseCubePool;
 
+		public event Action<BaseCube> Died;
+		
 		private void Awake() =>
 			_colorService = new ColorService();
 
@@ -34,9 +36,8 @@ namespace CubeRain
 			}
 		}
 
-		public void Initialize(ObjectPool<BaseCube> baseCubePool, Vector3 startPosition, Color startColor)
+		public void Initialize(Vector3 startPosition, Color startColor)
 		{
-			_baseCubePool = baseCubePool;
 			transform.position = startPosition;
 			transform.GetComponent<MeshRenderer>().material.color = startColor;
 		}
@@ -44,8 +45,8 @@ namespace CubeRain
 		private IEnumerator StartTimeToDestroy()
 		{
 			yield return _waitForSeconds;
-			_baseCubePool.Release(this);
 			_collisionCount = 0;
+			Died?.Invoke(this);
 		}
 	}
 }
