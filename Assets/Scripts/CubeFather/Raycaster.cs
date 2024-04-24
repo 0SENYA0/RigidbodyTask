@@ -9,6 +9,11 @@ namespace CubeFather
 		private void Awake() =>
 			_mediator = new Mediator();
 
+	[SerializeField] private SpriteRenderer spriteRenderer;
+    private Color targetColor = Color.red;
+    private Vector3 newPosition = new Vector3(2f,2f,2f);
+    private Vector3 newScale;
+
 		void Update()
 		{
 			if (Input.GetMouseButtonDown(0))
