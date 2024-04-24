@@ -8,7 +8,8 @@ using Random = UnityEngine.Random;
 public class CubeSpawner : MonoBehaviour
 {
 	[SerializeField] private float _size;
-	[SerializeField] private float _spawnDelay = 2f;
+	[SerializeField] private float _spawnDelay = 0.1f;
+	[SerializeField] private Color _startColor;
 
 	[SerializeField] private BaseCube _baseCube;
 
@@ -35,7 +36,7 @@ public class CubeSpawner : MonoBehaviour
 		while (true)
 		{
 			BaseCube cube = _baseCubePool.Get();
-			cube.Initialize(_baseCubePool, GetRandomPosition());
+			cube.Initialize(_baseCubePool, GetRandomPosition(), _startColor);
 			yield return _waitForSeconds;
 		}
 	}

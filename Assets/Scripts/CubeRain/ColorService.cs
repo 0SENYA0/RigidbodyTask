@@ -5,6 +5,6 @@ namespace CubeRain
 	public class ColorService
 	{
 		public Color GetRandomColor() =>
-			 new Color(Random.Range(25, 200), Random.Range(25, 200),Random.Range(25, 200), 1f);
+			 new Color(Random.Range(0f, 1f), Random.Range(0f, 1f),Random.Range(0f, 1f), 1f);
 	}
 }
