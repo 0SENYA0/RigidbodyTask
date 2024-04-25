@@ -1,41 +1,30 @@
-using System;
 using System.Collections;
 using CubeRain;
 using UnityEngine;
-using UnityEngine.Pool;
 using Random = UnityEngine.Random;
 
-public class CubeSpawner : MonoBehaviour
+public class CubeSpawner : Spawner<BaseCube>
 {
 	[SerializeField] private float _size;
 	[SerializeField] private float _spawnDelay = 0.1f;
 	[SerializeField] private Color _startColor;
-
-	[SerializeField] private BaseCube _baseCube;
-
+	[SerializeField] private BombSpawner _bombSpawner;
+	
 	//  время между созданием кубов    
 	private WaitForSeconds _waitForSeconds;
-	private ObjectPool<BaseCube> _baseCubePool;
 	private Vector3 _spawnPosition;
-
-	private void Awake()
+	
+	private void Start()
 	{
-		_baseCubePool = new ObjectPool<BaseCube>(() => Instantiate(_baseCube),
-			(cube) => cube.transform.gameObject.SetActive(true),
-			(cube) => cube.transform.gameObject.SetActive(false),
-			(cube) => Destroy(cube.transform.gameObject));
-
 		_waitForSeconds = new WaitForSeconds(_spawnDelay);
-	}
-
-	private void Start() =>
 		StartCoroutine(Spawn());
+	}
 
 	private IEnumerator Spawn()
 	{
 		while (true)
 		{
-			BaseCube cube = _baseCubePool.Get();
+			BaseCube cube = Get();
 			cube.Died += OnCubeDied;
 			cube.Initialize(GetRandomPosition(), _startColor);
 			yield return _waitForSeconds;
@@ -45,7 +34,8 @@ public class CubeSpawner : MonoBehaviour
 	private void OnCubeDied(BaseCube cube)
 	{
 		cube.Died -= OnCubeDied;
-		_baseCubePool.Release(cube);
+		Release(cube);
+		_bombSpawner.Spawn(cube.transform.position);
 	}
 
 	private Vector3 GetRandomPosition()
@@ -60,7 +50,6 @@ public class CubeSpawner : MonoBehaviour
 	private void OnDrawGizmos()
 	{
 		Gizmos.color = Color.black;
-
 		Gizmos.DrawWireCube(transform.position, new Vector3(transform.localScale.x * _size, 1, transform.localScale.z * _size));
 	}
 }

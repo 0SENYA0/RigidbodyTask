@@ -6,7 +6,7 @@ using Random = UnityEngine.Random;
 
 namespace CubeRain
 {
-	public class BaseCube : MonoBehaviour
+	public class BaseCube : MonoBehaviour, IPooledObject
 	{
 		private float _delay;
 		private WaitForSeconds _waitForSeconds;
