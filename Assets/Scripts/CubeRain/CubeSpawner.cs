@@ -13,7 +13,6 @@ public class CubeSpawner : MonoBehaviour
 
 	[SerializeField] private BaseCube _baseCube;
 
-	//  время между созданием кубов    
 	private WaitForSeconds _waitForSeconds;
 	private ObjectPool<BaseCube> _baseCubePool;
 	private Vector3 _spawnPosition;
